@@ -11,3 +11,14 @@ venv.bak/
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Django
+db.sqlite3
+*.log
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
