@@ -64,16 +64,7 @@
 				          <li><a href="{% url 'First_App:about' %}">About</a></li>
 				          <li><a href="{% url 'Blog:index' %}">Blog</a></li>
 				          </li>	
-				          <li class="menu-has-children"><a href="">Pages</a>
-				            <ul>
-				            	  <li><a href="{% url 'First_App:elements' %}">Elements</a></li>
-						          <li class="menu-has-children"><a href="">Level 2 </a>
-						            <ul>
-						              <li><a href="#">Item One</a></li>
-						              <li><a href="#">Item Two</a></li>
-						            </ul>
-						          </li>					                		
-				            </ul>
+				          <li class="menu-has-children"><a href="{% url 'First_App:elements' %}">Pages</a>
 				          </li>					          					          		          
 				          <li><a href="{% url 'First_App:contact' %}">Contact</a></li>
 				        </ul>
