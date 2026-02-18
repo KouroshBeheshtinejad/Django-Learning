@@ -1,6 +1,8 @@
 from django import template
 from Blog.models import Post
 from Blog.models import Category
+from taggit.models import Tag, TaggedItem
+from django.contrib.contenttypes.models import ContentType
 
 register = template.Library()
 
@@ -31,3 +33,10 @@ def postcategories():
     for name in categories:
         cat_dict[name]=posts.filter(category=name).count()     
     return {'categories':cat_dict}
+
+@register.inclusion_tag('blog/blog-tagcloud.html')
+def posttags():
+    post_type = ContentType.objects.get_for_model(Post)
+    tag_ids = TaggedItem.objects.filter(content_type=post_type).values_list('tag_id', flat=True)
+    tags = Tag.objects.filter(id__in=tag_ids).distinct()[:6]
+    return {'tags': tags}
