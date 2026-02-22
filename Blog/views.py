@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from Blog.models import Post, Comment
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from Blog.forms import CommentForm
@@ -25,6 +25,7 @@ def blog_view(request, **kwargs):
     context = {'posts':posts}
     return render(request, 'blog/blog-home.html', context)
 
+
 def blog_single(request, pid):
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -35,19 +36,28 @@ def blog_single(request, pid):
             messages.error(request, 'There was an error sending your comment. Please try again.')
     posts = Post.objects.filter(status=1)
     post = get_object_or_404(posts, pk=pid)
-    comments = Comment.objects.filter(post=post.id, approved=True)
-    form = CommentForm()
-    context = {'post': post,'comments':comments, 'form':form}
-    return render(request, 'blog/blog-single.html', context)
+    if post.loginrequired and not request.user.is_authenticated:
+        messages.error(request, 'You must be logged in to view this post.')
+        return redirect('accounts:login')
+    else:
+        post.counted_view += 1
+        post.save()
+        comments = Comment.objects.filter(post=post.id, approved=True)
+        form = CommentForm()
+        context = {'post': post,'comments':comments, 'form':form}
+        return render(request, 'blog/blog-single.html', context)
+
 
 def test(request):    
     return render(request, 'test.html')
+
 
 def blog_category(request, cat_name):
     posts = Post.objects.filter(status=1)
     posts = posts.filter(category__name=cat_name)
     context = {'posts':posts}
     return render(request, 'blog/blog-home.html', context)
+
 
 def blog_search(request):
     posts = Post.objects.filter(status=1)
