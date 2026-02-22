@@ -5,6 +5,7 @@ from First_App.models import Contact, Newsletter
 from First_App.forms import ContactForm, NewsletterForm
 from django.contrib import messages
 
+
 def index_view(request):
     latest_posts = Post.objects.filter(status=1).order_by('-published_date')[:6]
     context = {'latest_posts': latest_posts}

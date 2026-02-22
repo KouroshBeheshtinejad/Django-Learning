@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "taggit",
     "First_App.apps.FirstAppConfig",
     "Blog.apps.BlogConfig",
+    "accounts.apps.AccountsConfig",
 ]
 
 SITE_ID = 2
