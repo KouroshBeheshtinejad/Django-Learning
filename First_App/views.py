@@ -31,10 +31,6 @@ def contact_view(request):
     return render(request, 'website/contact.html', context)
 
 
-def elements_view(request):
-    return render(request, 'website/elements.html')
-
-
 def newsletter_view(request):
     if request.method == 'POST':
         form = NewsletterForm(request.POST)
