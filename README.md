@@ -1,4 +1,4 @@
-# 🚀 Django Landing Page Project — Full Technical Documentation
+# 🚀 Django First Site - Complete Blog & Landing Page Platform
 
 ---
 
