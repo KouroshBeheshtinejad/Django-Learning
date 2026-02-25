@@ -45,3 +45,13 @@ def posttags():
     tag_ids = TaggedItem.objects.filter(content_type=post_type).values_list('tag_id', flat=True)
     tags = Tag.objects.filter(id__in=tag_ids).distinct()[:6]
     return {'tags': tags}
+
+@register.inclusion_tag("blog/blog-popular-posts.html")
+def popularposts(count=3):
+    posts = (
+        Post.objects
+        .filter(status=1)
+        .order_by("-counted_view")[:count]
+    )
+
+    return {"posts": posts}
