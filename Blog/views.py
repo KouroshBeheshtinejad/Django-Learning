@@ -1,11 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from Blog.models import Post, Comment
+from Blog.models import Post, Comment, PostView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from Blog.forms import CommentForm
 from django.contrib import messages
 
+
 # Create your views here.
 def blog_view(request, **kwargs):
+    #--------- FILTERING ----------
     posts = Post.objects.filter(status=1)
     if kwargs.get('cat_name') != None :
         posts = posts.filter(category__name=kwargs['cat_name'])
@@ -27,32 +29,43 @@ def blog_view(request, **kwargs):
 
 
 def blog_single(request, pid):
-    if request.method == 'POST':
+    post = get_object_or_404(Post.objects.filter(status=1),pk=pid)
+    # ---------- login check ----------
+    if post.loginrequired and not request.user.is_authenticated:
+        messages.error(request,"You must be logged in to view this post.")
+        return redirect("accounts:login")
+    # ---------- VIEW COUNTER ----------
+    if request.user.is_authenticated:
+        obj, created = PostView.objects.get_or_create(user=request.user,post=post)
+        if created:
+            post.counted_view += 1
+            post.save(update_fields=["counted_view"])
+    else:
+        session_key = f"viewed_post_{post.id}"
+        if not request.session.get(session_key):
+            post.counted_view += 1
+            post.save(update_fields=["counted_view"])
+            request.session[session_key] = True
+    # ---------- COMMENTS ----------
+    if request.method == "POST":
         form = CommentForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Your comment has been sent successfully!')
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            messages.success(request,"Your comment has been sent successfully!")
+            return redirect("Blog:single", pid=post.id)
         else:
-            messages.error(request, 'There was an error sending your comment. Please try again.')
-    posts = Post.objects.filter(status=1)
-    post = get_object_or_404(posts, pk=pid)
-    if post.loginrequired and not request.user.is_authenticated:
-        messages.error(request, 'You must be logged in to view this post.')
-        return redirect('accounts:login')
+            messages.error(request,"There was an error with your comment. Please try again.")
     else:
-        post.counted_view += 1
-        post.save()
-        comments = Comment.objects.filter(post=post.id, approved=True)
-        form = CommentForm()
-        context = {'post': post,'comments':comments, 'form':form}
-        return render(request, 'blog/blog-single.html', context)
-
-
-def test(request):    
-    return render(request, 'test.html')
+        form = CommentForm() 
+    comments = Comment.objects.filter(post=post,approved=True)
+    context = {"post": post,"comments": comments,"form": form,}
+    return render(request,"blog/blog-single.html",context)
 
 
 def blog_category(request, cat_name):
+    # ---------- FILTERING ----------
     posts = Post.objects.filter(status=1)
     posts = posts.filter(category__name=cat_name)
     context = {'posts':posts}
@@ -60,6 +73,7 @@ def blog_category(request, cat_name):
 
 
 def blog_search(request):
+    # --------- FILTERING ----------
     posts = Post.objects.filter(status=1)
     if request.method == 'GET':
         if s := request.GET.get('s'):

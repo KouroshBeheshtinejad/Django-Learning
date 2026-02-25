@@ -11,7 +11,7 @@ class PostAdmin(SummernoteModelAdmin):
     list_filter = ('status', 'author',)
     # ordering = ['created_date']
     search_fields = ['title', 'content']
-    ordering = ('-published_date',)
+    ordering = ('-counted_view', '-published_date',)
     summernote_fields = ('content',)
 
 class CommentAdmin(admin.ModelAdmin):
