@@ -58,7 +58,7 @@ The project demonstrates advanced Django concepts including environment-based co
 
 ---
 
-## ⚡ Quick Start
+## Quick Start
 
 Get the application running in 5 minutes:
 
@@ -92,7 +92,7 @@ Visit: http://localhost:8000
 
 ---
 
-## 📦 Installation
+## Installation
 
 ---
 
@@ -140,7 +140,7 @@ Visit: http://localhost:8000
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 Complete guides for all aspects:
 
@@ -170,7 +170,7 @@ Complete guides for all aspects:
 
 ---
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 Django_Learning/
@@ -196,7 +196,7 @@ Django_Learning/
 
 ---
 
-## 🔐 Security Features
+## Security Features
 
 ✅ CSRF Protection  
 ✅ XSS Prevention  
@@ -213,7 +213,7 @@ Django_Learning/
 
 ---
 
-## 📊 Technology Stack
+## Technology Stack
 
 - **Backend:** Django 6.0.1
 - **Database:** SQLite (dev) / PostgreSQL (prod)
@@ -224,7 +224,7 @@ Django_Learning/
 
 ---
 
-## 🎓 Features Included
+## Features Included
 
 ### Blog System
 - Create/edit/delete posts
@@ -254,7 +254,7 @@ Django_Learning/
 
 ---
 
-## 🚀 Deployment
+## Deployment
 
 ### Quick Checklist
 - [ ] Generate new SECRET_KEY
@@ -268,7 +268,7 @@ Django_Learning/
 
 ---
 
-## 🔑 Environment Variables
+## Environment Variables
 
 | Variable | Purpose | Default |
 |----------|---------|---------|
@@ -278,11 +278,11 @@ Django_Learning/
 | `DB_ENGINE` | Database type | `sqlite3` |
 | `SECURE_SSL_REDIRECT` | Force HTTPS | `True` (prod) |
 
-**[👉 See .env.example for all variables](../.env.example)**
+**[👉 See .env.example for all variables](.env.example)**
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ```bash
 # Run security check
@@ -297,7 +297,7 @@ python manage.py collectstatic --noinput
 
 ---
 
-## 📞 Need Help?
+## Need Help?
 
 1. **Quick Start:** [QUICKSTART.md](QUICKSTART.md) (5 minutes)
 2. **Deployment:** [DEPLOYMENT.md](DEPLOYMENT.md) (production setup)
@@ -306,13 +306,13 @@ python manage.py collectstatic --noinput
 
 ---
 
-## 📄 License
+## License
 
 MIT License - See [LICENSE](LICENSE) for details
 
 ---
 
-## 🎉 Ready to Use!
+## Ready to Use!
 
 This project is **production-ready** with:
 - ✅ Professional code organization
@@ -331,18 +331,18 @@ This project is **production-ready** with:
 - A backend onboarding checkpoint
 
 ---
-## 🤝 Contribution Policy
+## Contribution Policy
 
 Currently a solo learning repository.
 Suggestions and improvement pull requests are welcome.
 
 ---
-## 📜 License
+## License
 
 Educational Use — Learning Project
 
 ---
-## 👨‍💻 Author
+## Author
 
 Kourosh Beheshtinejad — Django track — landing page integration phase complete.
 
